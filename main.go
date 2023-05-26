@@ -57,7 +57,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := chi.NewRouter()
 
-	r.Post("/upload", UploadFile)
+	r.Post("/api/image", UploadFile)
 
 	http.ListenAndServe(":8080", r)
 }
