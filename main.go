@@ -52,12 +52,35 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
+	w.Write(response)
+}
+
+func GetImage(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	file := fmt.Sprintf("./uploads/%s", id)
+
+	_, err := os.Stat(file)
+
+	if errors.Is(err, os.ErrNotExist) {
+		http.Error(w, "Image doesn't exist", http.StatusNotFound)
+		return
+	}
+
+	img, err := ioutil.ReadFile(file)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(img)
 }
 
 func main() {
 	r := chi.NewRouter()
 
 	r.Post("/api/image", UploadFile)
+	r.Get("/api/image/{id}", GetImage)
 
 	http.ListenAndServe(":8080", r)
 }
