@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Card from "./components/Card.svelte";
   import axios from "axios";
+  import ImageUploader from "./components/ImageUploader.svelte";
 
   const onSubmit = (event: SubmitEvent) => {
     event.preventDefault();
@@ -13,4 +13,4 @@
   };
 </script>
 
-<Card {onSubmit} />
+<ImageUploader {onSubmit} />
