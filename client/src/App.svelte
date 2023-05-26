@@ -1,16 +1,34 @@
 <script lang="ts">
   import axios from "axios";
   import ImageUploader from "./components/ImageUploader.svelte";
+  import UploadedImageCard from "./components/UploadedImageCard.svelte";
 
-  const onSubmit = (event: SubmitEvent) => {
+  let state: "initial" | "loading" | "uploaded" = "uploaded";
+  let imgId: string;
+
+  const onSubmit = async (event: SubmitEvent) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    axios.post("http://localhost:8080/api/image", formData, {
-      onUploadProgress: (progressEvent) => {
-        console.log(progressEvent.loaded / progressEvent.total);
-      },
-    });
+    state = "loading";
+    const response = await axios.post<{ imgId: string }>(
+      "http://localhost:8080/api/image",
+      formData,
+      {
+        onUploadProgress: (progressEvent) => {
+          console.log(progressEvent.loaded / progressEvent.total);
+        },
+      }
+    );
+
+    state = "uploaded";
+    imgId = response.data.imgId;
   };
 </script>
 
-<ImageUploader {onSubmit} />
+{#if state === "initial"}
+  <ImageUploader {onSubmit} />
+{:else if state === "loading"}
+  <p>Loading...</p>
+{:else if state === "uploaded"}
+  <UploadedImageCard />
+{/if}

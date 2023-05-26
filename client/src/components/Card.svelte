@@ -2,7 +2,7 @@
 </script>
 
 <div class="card">
-  <slot></slot>
+  <slot />
 </div>
 
 <style>
@@ -14,6 +14,8 @@
     text-align: center;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     margin: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-
 </style>

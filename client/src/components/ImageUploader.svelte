@@ -2,6 +2,7 @@
   import Card from "./Card.svelte";
 
   import image from "../assets/image.svg";
+  import Button from "./Button.svelte";
 
   export let onSubmit: (event: SubmitEvent) => void;
 
@@ -14,7 +15,7 @@
 </script>
 
 <Card>
-  <h1 class="card__header">Upload your file</h1>
+  <h1 class="header">Upload your file</h1>
   <p>File should be JPEG or PNG</p>
   <form
     bind:this={form}
@@ -36,21 +37,11 @@
       type="file"
       name="image"
     />
-    <button type="button" on:click={onChooseFile} class="btn"
-      >Choose a file</button
-    >
+    <Button on:click={onChooseFile}>Choose a file</Button>
   </form>
 </Card>
 
 <style>
-  .card__header {
-    font-size: 18px;
-    color: #4f4f4f;
-    letter-spacing: -0.035em;
-    font-weight: 500;
-    margin-bottom: 1rem;
-  }
-
   .card__header + p {
     font-size: 10px;
     color: #828282;
@@ -83,18 +74,6 @@
 
   .file-input {
     display: none;
-  }
-
-  .btn {
-    background-color: #2f80ed;
-    border-radius: 8px;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    font-size: 12px;
-    line-height: 18px;
-    cursor: pointer;
-    font-family: "Noto Sans", sans-serif;
   }
 
   .btn {

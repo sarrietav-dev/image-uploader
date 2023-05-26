@@ -19,3 +19,11 @@ body {
   align-items: center;
   margin: 0 auto;
 }
+
+.header {
+  font-size: 18px;
+  color: #4f4f4f;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
