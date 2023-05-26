@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -13,6 +15,10 @@ import (
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 const UPLOAD_FOLDER = "uploads"
+
+type UploadFileResponse struct {
+	ImgId string `json:"imgId"`
+}
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, MAX_FILE_SIZE)
@@ -37,7 +43,9 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dst, err := os.Create(fmt.Sprintf("./%s/%s%s", UPLOAD_FOLDER, uuid.New(), filepath.Ext(fileHeader.Filename)))
+	id := fmt.Sprintf("%s%s", uuid.New(), filepath.Ext(fileHeader.Filename))
+
+	dst, err := os.Create(fmt.Sprintf("./%s/%s", UPLOAD_FOLDER, id))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -51,7 +59,14 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	response, err := json.Marshal(UploadFileResponse{ImgId: id})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusCreated)
+	w.Header().Add("Content-Type", "application/json")
 	w.Write(response)
 }
 
@@ -67,12 +82,11 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	img, err := ioutil.ReadFile(file)
+	img, err := os.ReadFile(file)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	w.WriteHeader(http.StatusOK)
 	w.Write(img)
 }
 
