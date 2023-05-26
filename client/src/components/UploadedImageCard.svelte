@@ -4,6 +4,10 @@
   import CheckIcon from "./CheckIcon.svelte";
   export let imgId: string = "d29599de-e4c6-4e01-a24d-eeeab202ae83.jpg";
   let url = `http://localhost:8080/api/image/${imgId}`;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(url);
+  };
 </script>
 
 <Card>
@@ -19,7 +23,7 @@
       </a>
     </div>
     <div class="btn">
-      <Button>Copy Link</Button>
+      <Button on:click={copyToClipboard}>Copy Link</Button>
     </div>
   </div>
 </Card>
@@ -33,7 +37,7 @@
     height: 200px;
     width: 75%;
     border-radius: 12px;
-    margin: 1rem 0 2rem 0 ;
+    margin: 1rem 0 2rem 0;
   }
 
   .img-container img {
