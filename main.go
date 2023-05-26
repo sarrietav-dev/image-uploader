@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/google/uuid"
 )
 
@@ -92,6 +93,8 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	r := chi.NewRouter()
+
+	r.Use(cors.AllowAll().Handler)
 
 	r.Post("/api/image", UploadFile)
 	r.Get("/api/image/{id}", GetImage)
