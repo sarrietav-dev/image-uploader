@@ -44,7 +44,7 @@
     border: 2px dashed #97bef4;
     border-radius: 10px;
     padding: 3rem 5rem;
-    margin: 2rem 0;
+    margin: 2rem 0 1rem 0;
     background-color: #f6f8fb;
   }
 
@@ -63,13 +63,10 @@
     font-size: 12px;
     line-height: 18px;
     color: #bdbdbd;
+    margin: 1.5rem 0 1.75rem 0;
   }
 
   .file-input {
     display: none;
-  }
-
-  .btn {
-    margin-top: 1rem;
   }
 </style>
