@@ -4,8 +4,6 @@
   import image from "../assets/image.svg";
   import Button from "./Button.svelte";
 
-  export let onSubmit: (event: SubmitEvent) => void;
-
   let fileInput: HTMLInputElement;
   let form: HTMLFormElement;
 
@@ -17,12 +15,7 @@
 <Card>
   <h1 class="header">Upload your file</h1>
   <p>File should be JPEG or PNG</p>
-  <form
-    bind:this={form}
-    method="POST"
-    enctype="multipart/form-data"
-    on:submit={onSubmit}
-  >
+  <form bind:this={form} method="POST" enctype="multipart/form-data" on:submit>
     <div class="card__img-drop">
       <img src={image} alt="Mountains" />
       <p>Drag & Drop your image here.</p>
@@ -42,7 +35,7 @@
 </Card>
 
 <style>
-  .card__header + p {
+  .header + p {
     font-size: 10px;
     color: #828282;
   }

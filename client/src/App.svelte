@@ -3,7 +3,7 @@
   import ImageUploader from "./components/ImageUploader.svelte";
   import UploadedImageCard from "./components/UploadedImageCard.svelte";
 
-  let state: "initial" | "loading" | "uploaded" = "uploaded";
+  let state: "initial" | "loading" | "uploaded" = "initial";
   let imgId: string;
 
   const onSubmit = async (event: SubmitEvent) => {
@@ -26,9 +26,9 @@
 </script>
 
 {#if state === "initial"}
-  <ImageUploader {onSubmit} />
+  <ImageUploader on:submit={onSubmit} />
 {:else if state === "loading"}
   <p>Loading...</p>
 {:else if state === "uploaded"}
-  <UploadedImageCard />
+  <UploadedImageCard {imgId} />
 {/if}

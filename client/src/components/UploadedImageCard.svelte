@@ -2,7 +2,7 @@
   import Button from "./Button.svelte";
   import Card from "./Card.svelte";
   import CheckIcon from "./CheckIcon.svelte";
-  export let imgId: string = "d29599de-e4c6-4e01-a24d-eeeab202ae83.jpg";
+  export let imgId: string;
   let url = `http://localhost:8080/api/image/${imgId}`;
 
   const copyToClipboard = () => {
