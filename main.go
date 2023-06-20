@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -92,12 +93,17 @@ func GetImage(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	clientFiles := http.FileServer(http.Dir("client/dist"))
+
 	r := chi.NewRouter()
 
 	r.Use(cors.AllowAll().Handler)
 
+	r.Get("/", clientFiles.ServeHTTP)
+
 	r.Post("/api/image", UploadFile)
 	r.Get("/api/image/{id}", GetImage)
 
-	http.ListenAndServe(":8080", r)
+	log.Printf("Server up and running localhost:%s", "8080")
+	log.Fatalln(http.ListenAndServe(":8080", r))
 }
